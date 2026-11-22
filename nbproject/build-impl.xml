@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3"
+         basedir=".." default="default" name="LogisticaCD_GUI-impl">
+    <fail message="Please build using Ant 1.8.0 or higher.">
+        <condition><not><antversion atleast="1.8.0"/></not></condition>
+    </fail>
+    <property file="nbproject/project.properties"/>
+    <target name="default" depends="dist" description="Build whole project."/>
+    <target name="-init"><mkdir dir="${build.classes.dir}"/></target>
+    <target name="clean"><delete dir="${build.dir}"/><delete dir="${dist.dir}"/></target>
+    <target name="compile" depends="-init">
+        <javac srcdir="${src.dir}" destdir="${build.classes.dir}" source="${javac.source}"
+               target="${javac.target}" encoding="${source.encoding}" includeantruntime="false" debug="true"/>
+    </target>
+    <target name="dist" depends="compile">
+        <mkdir dir="${dist.dir}"/>
+        <jar destfile="${dist.jar}" basedir="${build.classes.dir}">
+            <manifest><attribute name="Main-Class" value="${main.class}"/></manifest>
+        </jar>
+    </target>
+    <target name="run" depends="compile">
+        <java classname="${main.class}" fork="true" failonerror="true">
+            <classpath><pathelement location="${build.classes.dir}"/></classpath>
+        </java>
+    </target>
+<target name="test" depends="compile">
+        <mkdir dir="${build.test.classes.dir}"/>
+        <javac srcdir="${test.src.dir}" destdir="${build.test.classes.dir}" encoding="UTF-8" includeantruntime="false" source="1.8" target="1.8" classpath="${build.classes.dir}"/>
+        <java classname="logistica.PruebaEstructuras" fork="true" failonerror="true">
+            <classpath><pathelement location="${build.classes.dir}"/><pathelement location="${build.test.classes.dir}"/></classpath>
+        </java>
+    </target>
+    <target name="jar" depends="dist"/><target name="build" depends="dist"/><target name="rebuild" depends="clean,dist"/>
+</project>
